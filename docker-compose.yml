@@ -1,0 +1,27 @@
+version: '2.10.2'
+services:
+  client:
+    container_name: client
+    restart: always
+    build: ./client
+    ports:
+      - "3000:3000"
+    links:
+      - app
+  app:
+    container_name: app
+    restart: always
+    build: ./app
+    ports: 
+      - "4000:4000"
+    depends_on: 
+      - mongo
+  mongo: 
+    container_name: mongo
+    image: mongo
+    volumes: 
+      - ./data:/data/db
+    expose:
+      - "27017"
+    ports:
+      - "27017:27017"
